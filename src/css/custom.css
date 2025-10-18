@@ -1,0 +1,192 @@
+/**
+ * Movian Plugin Development Guide - Custom Styles
+ */
+
+/* Movian Brand Colors */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  
+  /* Typography */
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --ifm-code-font-size: 95%;
+  
+  /* Code highlighting */
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  
+  /* Custom spacing */
+  --ifm-spacing-horizontal: 1.5rem;
+  --ifm-navbar-height: 60px;
+}
+
+/* Dark theme */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Hero section styling */
+.hero {
+  background: linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-dark) 100%);
+  color: white;
+}
+
+.hero__title {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.hero__subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+/* Custom admonitions */
+.admonition {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Code blocks */
+.prism-code {
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+/* Copy button styling */
+.clean-btn {
+  transition: all 0.2s ease;
+}
+
+.clean-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Table of contents */
+.table-of-contents {
+  font-size: 0.875rem;
+}
+
+.table-of-contents__link {
+  color: var(--ifm-color-content-secondary);
+}
+
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary);
+}
+
+/* Sidebar customization */
+.menu__link {
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.menu__link:hover {
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+.menu__link--active {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  font-weight: 600;
+}
+
+/* Navbar customization */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar__brand {
+  font-weight: 600;
+}
+
+/* Footer customization */
+.footer {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.footer--dark {
+  background-color: #2d3748;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* Plugin-specific styles */
+.plugin-example {
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.api-method {
+  display: inline-block;
+  background: var(--ifm-color-primary);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: 0.5rem;
+}
+
+.api-method--get {
+  background: #10b981;
+}
+
+.api-method--post {
+  background: #3b82f6;
+}
+
+.api-method--put {
+  background: #f59e0b;
+}
+
+.api-method--delete {
+  background: #ef4444;
+}
+
+/* Code playground styles */
+.playground {
+  border: 1px solid var(--ifm-color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.playground__header {
+  background: var(--ifm-color-emphasis-100);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--ifm-color-border);
+  font-weight: 600;
+}
+
+.playground__content {
+  padding: 1rem;
+}

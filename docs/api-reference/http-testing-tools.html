@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTTP API Testing Tools</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; }
+    input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+    button { background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #005a87; }
+    .code-output { margin-top: 20px; }
+    pre { background: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto; }
+    .status-codes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .status-group { background: #f9f9f9; padding: 15px; border-radius: 4px; }
+    .inspector-section { margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <h1>HTTP API Testing Tools</h1>
+  <p>Interactive tools for testing HTTP requests</p>
+<div class="tool-section">
+  <h2>Request Builder</h2>
+  <p>Build and test HTTP requests interactively</p>
+  <div class="http-request-builder">
+  <h3>HTTP Request Builder</h3>
+  
+  <div class="form-group">
+    <label for="http-method">Method:</label>
+    <select id="http-method">
+      <option value="GET">GET</option>
+      <option value="POST">POST</option>
+      <option value="PUT">PUT</option>
+      <option value="DELETE">DELETE</option>
+      <option value="HEAD">HEAD</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="http-url">URL:</label>
+    <input type="text" id="http-url" placeholder="https://api.example.com/endpoint" />
+  </div>
+  
+  <div class="form-group">
+    <label for="http-headers">Headers (JSON):</label>
+    <textarea id="http-headers" rows="4" placeholder='{"Content-Type": "application/json"}'></textarea>
+  </div>
+  
+  <div class="form-group">
+    <label for="http-body">Request Body:</label>
+    <textarea id="http-body" rows="6" placeholder="Request body content"></textarea>
+  </div>
+  
+  <div class="form-group">
+    <label>
+      <input type="checkbox" id="http-caching" /> Enable Caching
+    </label>
+  </div>
+  
+  <div class="form-group">
+    <label>
+      <input type="checkbox" id="http-verify-ssl" /> Verify SSL
+    </label>
+  </div>
+  
+  <button onclick="generateHttpCode()">Generate Code</button>
+  
+  <div id="generated-code" class="code-output">
+    <h4>Generated Code:</h4>
+    <pre><code id="http-code-result"></code></pre>
+  </div>
+</div>
+
+<script>
+function generateHttpCode() {
+  const method = document.getElementById('http-method').value;
+  const url = document.getElementById('http-url').value;
+  const headers = document.getElementById('http-headers').value;
+  const body = document.getElementById('http-body').value;
+  const caching = document.getElementById('http-caching').checked;
+  const verifySSL = document.getElementById('http-verify-ssl').checked;
+  
+  let code = `var response = http.request('${url}'`;
+  
+  const options = [];
+  
+  if (method !== 'GET') {
+    options.push(`method: '${method}'`);
+  }
+  
+  if (headers.trim()) {
+    try {
+      JSON.parse(headers);
+      options.push(`headers: ${headers}`);
+    } catch (e) {
+      options.push(`headers: {${headers}}`);
+    }
+  }
+  
+  if (body.trim()) {
+    if (method === 'POST' || method === 'PUT') {
+      options.push(`postdata: '${body}'`);
+    }
+  }
+  
+  if (caching) {
+    options.push('caching: true');
+  }
+  
+  if (verifySSL) {
+    options.push('verifySSL: true');
+  }
+  
+  if (options.length > 0) {
+    code += ', {\n  ' + options.join(',\n  ') + '\n}';
+  }
+  
+  code += ');\n\n';
+  code += 'var data = JSON.parse(response.toString());\n';
+  code += 'console.log("Response:", data);';
+  
+  document.getElementById('http-code-result').textContent = code;
+}
+</script>
+</div><div class="tool-section">
+  <h2>Response Inspector</h2>
+  <p>Inspect HTTP response details</p>
+  <div class="http-response-inspector">
+  <h3>HTTP Response Inspector</h3>
+  
+  <div class="inspector-section">
+    <h4>Status Code Analysis</h4>
+    <div class="status-codes">
+      <div class="status-group">
+        <h5>2xx Success</h5>
+        <ul>
+          <li><strong>200 OK</strong> - Request successful</li>
+          <li><strong>201 Created</strong> - Resource created</li>
+          <li><strong>204 No Content</strong> - Success, no response body</li>
+        </ul>
+      </div>
+      
+      <div class="status-group">
+        <h5>4xx Client Error</h5>
+        <ul>
+          <li><strong>400 Bad Request</strong> - Invalid request</li>
+          <li><strong>401 Unauthorized</strong> - Authentication required</li>
+          <li><strong>403 Forbidden</strong> - Access denied</li>
+          <li><strong>404 Not Found</strong> - Resource not found</li>
+          <li><strong>429 Too Many Requests</strong> - Rate limit exceeded</li>
+        </ul>
+      </div>
+      
+      <div class="status-group">
+        <h5>5xx Server Error</h5>
+        <ul>
+          <li><strong>500 Internal Server Error</strong> - Server error</li>
+          <li><strong>502 Bad Gateway</strong> - Gateway error</li>
+          <li><strong>503 Service Unavailable</strong> - Service down</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="inspector-section">
+    <h4>Response Handling Examples</h4>
+    <pre><code>// Check response status
+if (response.statuscode === 200) {
+  var data = JSON.parse(response.toString());
+  // Handle success
+} else if (response.statuscode === 404) {
+  console.log('Resource not found');
+} else if (response.statuscode >= 500) {
+  console.log('Server error');
+}
+
+// Access response headers
+console.log('Content-Type:', response.headers['content-type']);
+console.log('Cache-Control:', response.headers['cache-control']);</code></pre>
+  </div>
+</div>
+</div></body>
+</html>

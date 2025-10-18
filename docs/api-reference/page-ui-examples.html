@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Page and UI Examples</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; }
+    input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+    button { background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #005a87; }
+    .code-output { margin-top: 20px; }
+    pre { background: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto; }
+    .component-tabs { margin-bottom: 20px; }
+    .tab-button { margin-right: 10px; }
+    .tab-button.active { background: #005a87; }
+    .component-example { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Interactive Page and UI Examples</h1>
+  <p>Interactive examples for testing page manipulation and UI components</p>
+<div class="example-section">
+  <h2>Page Builder</h2>
+  <p>Build and test page content interactively</p>
+  <div class="page-builder">
+  <h3>Page Builder</h3>
+  
+  <div class="form-group">
+    <label for="page-title">Page Title:</label>
+    <input type="text" id="page-title" placeholder="My Plugin Page" />
+  </div>
+  
+  <div class="form-group">
+    <label for="page-type">Page Type:</label>
+    <select id="page-type">
+      <option value="directory">Directory</option>
+      <option value="video">Video</option>
+      <option value="audio">Audio</option>
+      <option value="image">Image</option>
+      <option value="item">Item</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="item-url">Item URL:</label>
+    <input type="text" id="item-url" placeholder="http://example.com/video.mp4" />
+  </div>
+  
+  <div class="form-group">
+    <label for="item-type">Item Type:</label>
+    <select id="item-type">
+      <option value="item">Item</option>
+      <option value="directory">Directory</option>
+      <option value="video">Video</option>
+      <option value="audio">Audio</option>
+      <option value="image">Image</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="item-title">Item Title:</label>
+    <input type="text" id="item-title" placeholder="Sample Video" />
+  </div>
+  
+  <div class="form-group">
+    <label for="item-description">Item Description:</label>
+    <textarea id="item-description" rows="3" placeholder="Item description"></textarea>
+  </div>
+  
+  <button onclick="generatePageCode()">Generate Page Code</button>
+  
+  <div id="page-code-output" class="code-output">
+    <h4>Generated Code:</h4>
+    <pre><code id="page-code-result"></code></pre>
+  </div>
+</div>
+
+<script>
+function generatePageCode() {
+  const pageTitle = document.getElementById('page-title').value;
+  const pageType = document.getElementById('page-type').value;
+  const itemUrl = document.getElementById('item-url').value;
+  const itemType = document.getElementById('item-type').value;
+  const itemTitle = document.getElementById('item-title').value;
+  const itemDescription = document.getElementById('item-description').value;
+  
+  let code = '// Page setup\n';
+  code += 'page.loading = true;\n';
+  code += `page.type = '${pageType}';\n`;
+  code += `page.metadata.title = '${pageTitle}';\n`;
+  code += 'page.entries = 0;\n\n';
+  
+  code += '// Add item to page\n';
+  code += `page.appendItem('${itemUrl}', '${itemType}', {\n`;
+  code += `  title: '${itemTitle}',\n`;
+  code += `  description: '${itemDescription}',\n`;
+  code += '  icon: Plugin.path + "icon.png"\n';
+  code += '});\n\n';
+  
+  code += 'page.entries++;\n';
+  code += 'page.loading = false;';
+  
+  document.getElementById('page-code-result').textContent = code;
+}
+</script>
+</div><div class="example-section">
+  <h2>UI Component Showcase</h2>
+  <p>Explore available UI components with live examples</p>
+  <div class="ui-showcase">
+  <h3>UI Component Showcase</h3>
+  
+  <div class="component-tabs">
+    <button class="tab-button active" onclick="showComponent('layout')">Layout</button>
+    <button class="tab-button" onclick="showComponent('display')">Display</button>
+    <button class="tab-button" onclick="showComponent('interactive')">Interactive</button>
+  </div>
+  
+  <div id="layout-components" class="component-section">
+    <h4>Layout Components</h4>
+    
+    <div class="component-example">
+      <h5>container_x (Horizontal Layout)</h5>
+      <pre><code>widget(container_x, {
+  width: 100%;
+  height: 50;
+  spacing: 10;
+  align: center;
+  
+  widget(button, { caption: "Button 1"; });
+  widget(button, { caption: "Button 2"; });
+});</code></pre>
+    </div>
+    
+    <div class="component-example">
+      <h5>container_y (Vertical Layout)</h5>
+      <pre><code>widget(container_y, {
+  width: 300;
+  height: 400;
+  spacing: 15;
+  
+  widget(text, { caption: "Title"; });
+  widget(image, { source: "image.jpg"; });
+});</code></pre>
+    </div>
+  </div>
+  
+  <div id="display-components" class="component-section" style="display: none;">
+    <h4>Display Components</h4>
+    
+    <div class="component-example">
+      <h5>text</h5>
+      <pre><code>widget(text, {
+  caption: "Hello World";
+  size: 18;
+  color: 0xffffff;
+  align: center;
+});</code></pre>
+    </div>
+    
+    <div class="component-example">
+      <h5>image</h5>
+      <pre><code>widget(image, {
+  source: "poster.jpg";
+  width: 300;
+  height: 450;
+  alpha: 1.0;
+});</code></pre>
+    </div>
+  </div>
+  
+  <div id="interactive-components" class="component-section" style="display: none;">
+    <h4>Interactive Components</h4>
+    
+    <div class="component-example">
+      <h5>button</h5>
+      <pre><code>widget(button, {
+  caption: "Click Me";
+  width: 120;
+  height: 40;
+  
+  onEvent(activate, {
+    fireEvent(customAction());
+  });
+});</code></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+function showComponent(type) {
+  // Hide all sections
+  document.querySelectorAll('.component-section').forEach(section => {
+    section.style.display = 'none';
+  });
+  
+  // Remove active class from all tabs
+  document.querySelectorAll('.tab-button').forEach(button => {
+    button.classList.remove('active');
+  });
+  
+  // Show selected section
+  document.getElementById(type + '-components').style.display = 'block';
+  
+  // Add active class to clicked tab
+  event.target.classList.add('active');
+}
+</script>
+</div></body>
+</html>
